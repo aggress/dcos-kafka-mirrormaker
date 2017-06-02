@@ -1,6 +1,9 @@
 # Use an official Python runtime as a base image
 FROM centos:latest
 
+ENV SCALA_VERSION 2.11
+ENV KAFKA_VERSION 0.10.2.0
+
 # Set the working directory to /app
 WORKDIR /root
 
@@ -8,10 +11,8 @@ WORKDIR /root
 COPY consumer.properties producer.properties ./
 
 # Image update
-RUN yum -y -q install deltarpm \
-&& yum -y -q update \
-&& yum -y -q install java-1.7.0-openjdk-headless \
-&& yum clean all \
-&& curl -fsSLO http://mirror.catn.com/pub/apache/kafka/0.10.2.1/kafka_2.11-0.10.2.1.tgz \
-&& tar zxf kafka_2.11-0.10.2.1.tgz && rm -f kafka_2.11-0.10.2.1.tgz
-
+RUN yum makecache fast \
+ && yum -y -q update \
+ && yum -y -q install java-1.8.0-openjdk-headless \
+ && yum clean all \
+ && curl http://mirror.catn.com/pub/apache/kafka/"$KAFKA_VERSION"/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz | tar xvz
