@@ -15,8 +15,6 @@ RUN yum makecache fast \
  && yum -y -q install java-1.8.0-openjdk-headless java-1.8.0-openjdk-devel git tmux unzip nc \
  && yum -y -q groupinstall 'Development Tools' \
  && curl -fsSL http://mirror.ox.ac.uk/sites/rsync.apache.org/kafka/"$KAFKA_VERSION"/kafka_"$SCALA_VERSION"-"$KAFKA_VERSION".tgz | tar xvz \
- && curl -fsSL -o kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"/config/consumer.mm.properties https://raw.githubusercontent.com/aggress/kafka-mirrormaker/master/consumer.mm.properties \
- && curl -fsSL -o kafka_"$SCALA_VERSION"-"$KAFKA_VERSION"/config/producer.mm.properties https://raw.githubusercontent.com/aggress/kafka-mirrormaker/master/producer.mm.properties \
  && curl -fsSL https://bintray.com/sbt/rpm/rpm | tee /etc/yum.repos.d/bintray-sbt-rpm.repo \
  && yum -y -q install sbt \
  && git clone https://github.com/yahoo/kafka-manager.git \
@@ -33,7 +31,7 @@ RUN yum makecache fast \
  && cp kafkacat /usr/local/bin/ \
  && cd /root \
  && rm -rf kafkacat \
- && git clone https://github.com/aggress/kafka-toolbox-scripts.git
+ && git clone https://github.com/aggress/kafka-toolbox-scripts.git \
  && yum -y -q groupremove 'Development Tools' \
  && yum -y -q remove sbt java-1.8.0-openjdk-devel git \
  && yum clean all
